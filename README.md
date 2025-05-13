@@ -6,12 +6,14 @@ This repository contains both the **frontend** and **backend** for Alice, an int
 
 ## 🗂 Project Structure
 
+```
 copilot/
-├── frontend/ # React + Tailwind UI (Vite, managed in Cursor)
-├── backend/ # Azure Functions backend (C#, Isolated Worker)
-├── shared/ # (Optional) Shared models or constants
+├── frontend/          # React + Tailwind UI (Vite, managed in Cursor)
+├── backend/           # Azure Functions backend (C#, Isolated Worker)
+├── shared/            # (Optional) Shared models or constants
 ├── .gitignore
 ├── README.md
+```
 
 ---
 
@@ -22,58 +24,65 @@ copilot/
 - Open the `frontend/` folder in **Cursor** (or VS Code).
 - Run:
 
-```bash
-cd frontend
-npm install
-npm run dev
+    cd frontend
+    npm install
+    npm run dev
 
-Local dev runs on http://localhost:5173/.
+- Local dev runs on http://localhost:5173/
 
-Make sure vite.config.js proxies API calls to the backend:
+- Make sure `vite.config.js` includes a proxy to your backend:
 
-js
-Copy
-Edit
-server: {
-  proxy: {
-    '/api': 'http://localhost:7071',
-  },
-}
+    server: {
+      proxy: {
+        '/api': 'http://localhost:7071',
+      },
+    }
 
+---
 
-Backend (Azure Functions)
-Open the copilot.sln file in Visual Studio.
+### Backend (Azure Functions)
 
-Run the Azure Functions project locally:
+- Open the `copilot.sln` file in **Visual Studio**.
+- Run the Azure Functions project locally:
 
-bash
-Copy
-Edit
-cd backend
-func start
-The API will run on http://localhost:7071/api/.
+    cd backend
+    func start
 
-🔄 Connecting Frontend to Backend
-From the frontend, make API calls like:
+- The API will run on http://localhost:7071/api/
 
-ts
-Copy
-Edit
-fetch('/api/GetUserTasks')
-Vite's proxy will forward this to your local Azure Functions instance.
+---
 
-🚀 Deployment (Overview)
-Frontend: Deploy via Azure Static Web Apps, Blob Storage, or any static hosting.
+## 🔄 Connecting Frontend to Backend
 
-Backend: Deploy to Azure Functions as usual.
+From the frontend, you can call your API like this:
 
-You can set environment variables using .env files for dev/production separation.
+    fetch('/api/GetUserTasks')
 
-🧠 Tools Used
-React + Tailwind (Vite) – frontend
+Thanks to Vite’s proxy, this will forward to the Azure Function running locally.
 
-Azure Functions (.NET 7 Isolated Worker) – backend
+---
 
-Cursor – AI-assisted frontend development
+## 🚀 Deployment Overview
 
-Visual Studio – backend development
+- **Frontend**: Deploy via Azure Static Web Apps, Blob Storage, or any static host.
+- **Backend**: Deploy via Azure Functions (standard deployment).
+- Use `.env` files to set the appropriate base URLs or secrets in each environment.
+
+---
+
+## 🧠 Tools Used
+
+- React + Tailwind (Vite) — Frontend
+- Azure Functions (.NET 7 Isolated Worker) — Backend
+- Cursor — Frontend development IDE
+- Visual Studio — Backend development IDE
+
+---
+
+## 🧾 TODOs
+
+- [ ] Wire up authentication
+- [ ] Add shared type definitions (e.g., Ticket, UserProfile)
+- [ ] Connect to Jira APIs
+- [ ] Add Cognitive Search or RAG fallback
+- [ ] Polish UI with loading states and error handling
